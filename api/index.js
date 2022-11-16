@@ -3,6 +3,7 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { createServer } from 'http';
 import express from 'express';
 import cors from 'cors';
+import { GraphQLError } from 'graphql';
 
 import { typeDefs } from './typeDefs.js';
 import Resolvers from './resolvers.js';
@@ -17,6 +18,17 @@ const startApolloServer = async (app, httpServer) => {
     resolvers: {
       ...Resolvers,
       ...Scalar
+    },
+    context: ({ req }) => {
+      const token = req.headers['souurce-token'];
+      if (token !== process.env.MY_SECRET_TOKEN) {
+        throw new GraphQLError('Is not authenticated!', {
+          extensions: {
+            code: 'UNAUTHENTICATED',
+            http: { status: 401 }
+          }
+        });
+      }
     },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     introspection: true,
