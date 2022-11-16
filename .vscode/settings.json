@@ -1,0 +1,17 @@
+{
+  "javascript.suggestionActions.enabled": false,
+  "editor.tabSize": 2,
+  "files.exclude": {
+    ".gitattributes": true,
+    ".gitignore": true,
+    "LICENSE": true,
+    "README.md": true,
+    "node_modules": true
+  },
+  "eslint.enable": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["typescript", "typescriptreact", "javascript", "javascriptreact", "html"]
+}
